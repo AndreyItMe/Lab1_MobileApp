@@ -2,12 +2,15 @@ package com.example.bookstoreapp.ui.login
 
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -16,7 +19,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.bookstoreapp.R
 import com.google.firebase.appcheck.internal.util.Logger.TAG
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -26,7 +37,7 @@ import kotlin.math.sign
 
 @Composable
 fun LoginScreen() {
-    val auth = Firebase.auth
+    //val auth = Firebase.auth
 
     val emailState = remember {
         mutableStateOf("")
@@ -35,43 +46,59 @@ fun LoginScreen() {
     val passwordState = remember {
         mutableStateOf("")
     }
-    Log.d("MyLog", "User email: ${auth.currentUser?.email}")
-    Column(modifier = Modifier.fillMaxSize(),
+
+    Image(
+        painter = painterResource(
+        id = R.drawable.book_store_bg),
+        contentDescription = "BG",
+        modifier = Modifier.fillMaxSize(),
+        contentScale = ContentScale.Crop
+    )
+
+    //Log.d("MyLog", "User email: ${auth.currentUser?.email}")
+    Column(
+        modifier = Modifier.fillMaxSize().padding(
+            start = 40.dp, end = 40.dp
+        ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        TextField(value = emailState.value, onValueChange = {
+        Image(painter = painterResource(id = R.drawable.internet_explorer_logo_2005),
+            contentDescription = "Logo",
+            modifier = Modifier.size(150.dp)
+        )
+
+        Spacer(modifier = Modifier.height(15.dp))
+        Text(
+            text = "BookStore App",
+            color = Color.White,
+            fontWeight = FontWeight.Bold,
+            fontSize = 30.sp,
+            fontFamily = FontFamily.Serif
+        )
+
+        Spacer(modifier = Modifier.height(15.dp))
+
+        RoundedCornerTextField(
+            text = emailState.value,
+            label = "Email"
+        ){
             emailState.value = it
-        })
+        }
         Spacer(modifier = Modifier.height(10.dp))
 
-        TextField(value = passwordState.value, onValueChange = {
+        RoundedCornerTextField(
+            text = passwordState.value,
+            label = "Password"
+        ){
             passwordState.value = it
-        })
+        }
         Spacer(modifier = Modifier.height(10.dp))
+        LoginButton(text = "Sign In"){
 
-        Button(onClick = {
-            signIn(auth, emailState.value, passwordState.value)
-        }) {
-            Text(text = "Sign In")
         }
+        LoginButton(text = "Sign Up"){
 
-        Button(onClick = {
-            signUp(auth, emailState.value, passwordState.value)
-        }) {
-            Text(text = "Sign Up")
-        }
-
-        Button(onClick = {
-            signOut(auth)
-        }) {
-            Text(text = "Sign out")
-        }
-
-        Button(onClick = {
-            deleteAccount(auth, emailState.value, passwordState.value)
-        }) {
-            Text(text = "Delete account")
         }
     }
 }

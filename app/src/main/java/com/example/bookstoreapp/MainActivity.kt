@@ -38,6 +38,8 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.bookstoreapp.data.Book
 import com.example.bookstoreapp.ui.login.LoginScreen
+import com.example.bookstoreapp.ui.main_screen.DrawerHeader
+import com.example.bookstoreapp.ui.main_screen.MainScreen
 import com.example.bookstoreapp.ui.theme.BookStoreAppTheme
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -50,7 +52,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            LoginScreen()
+            //LoginScreen()
+            //DrawerHeader()
+            MainScreen()
         }
     }
 }
